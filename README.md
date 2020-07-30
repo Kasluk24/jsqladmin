@@ -1,3 +1,3 @@
 # jsqladmin
  
-Java Swing Application to manage several database types over an SQL console
+Java Swing Application to manage databases over an SQL console
