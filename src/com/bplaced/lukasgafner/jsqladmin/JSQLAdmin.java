@@ -16,18 +16,21 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import javax.swing.JTextPane;
+import java.awt.BorderLayout;
 
-public class JSQLAdmin implements KeyListener {
+public class JSQLAdmin implements KeyListener, GlobalConstants {
 	
 	// Swing Elements
 	private JFrame frameJSQLA;
 	private JMenuBar mbarJSQLA;
 	private JMenu mnuFile;
 	private JMenuItem mitemExit;
-	
 	private JPanel panTop, panBottom, panRight;
 	private GridBagLayout gblJSQLA;
 	private GridBagConstraints gbcTop, gbcBottom, gbcRight;
+	
+	private JTextPane txtpanTop, txtpanBottom;
 
 	// Launch application
 	public static void main(String[] args) {
@@ -105,6 +108,7 @@ public class JSQLAdmin implements KeyListener {
 		gbcTop.gridx = 0;
 		gbcTop.gridy = 0;
 		frameJSQLA.getContentPane().add(panTop, gbcTop);
+		panTop.setLayout(new BorderLayout(0, 0));
 		// Right
 		panRight = new JPanel();
 		panRight.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
@@ -123,6 +127,15 @@ public class JSQLAdmin implements KeyListener {
 		gbcBottom.gridx = 0;
 		gbcBottom.gridy = 1;
 		frameJSQLA.getContentPane().add(panBottom, gbcBottom);
+		panBottom.setLayout(new BorderLayout(0, 0));
+		
+		// Components
+		// Text Pane Bottom
+		txtpanBottom = new JTextPane();
+		panBottom.add(txtpanBottom, BorderLayout.CENTER);
+		// Text Pane Top
+		txtpanTop = new JTextPane();
+		panTop.add(txtpanTop, BorderLayout.CENTER);
 	}
 	
 	// Exit the Application
