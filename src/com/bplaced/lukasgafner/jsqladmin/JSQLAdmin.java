@@ -12,9 +12,15 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.GridBagLayout;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.border.LineBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
+
 import java.awt.Color;
 import javax.swing.JTextPane;
 import java.awt.BorderLayout;
@@ -29,6 +35,7 @@ public class JSQLAdmin implements KeyListener, GlobalConstants {
 	private JPanel panTop, panBottom, panRight;
 	private GridBagLayout gblJSQLA;
 	private GridBagConstraints gbcTop, gbcBottom, gbcRight;
+	private JScrollPane scrpTop, scrpBottom;
 	
 	private JTextPane txtpanTop, txtpanBottom;
 
@@ -49,18 +56,28 @@ public class JSQLAdmin implements KeyListener, GlobalConstants {
 	}
 	
 	@Override
-	public void keyTyped(KeyEvent e) {
-		// not in use yet	
-	}
+	public void keyTyped(KeyEvent e) {}
+	
+	@Override
+	public void keyReleased(KeyEvent e) {}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// Not in use yet	
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// Not in use yet	
+		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			updateHighlighting();
+		}
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			updateHighlighting();
+		}
+		if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+			updateHighlighting();
+		}
+		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+			updateHighlighting();
+		}
+		if (e.getKeyChar() == ';') {
+			updateHighlighting();
+		}
 	}
 
 	/**
@@ -130,17 +147,32 @@ public class JSQLAdmin implements KeyListener, GlobalConstants {
 		panBottom.setLayout(new BorderLayout(0, 0));
 		
 		// Components
-		// Text Pane Bottom
+		// Text Pane Bottom with Scroll Pane
 		txtpanBottom = new JTextPane();
-		panBottom.add(txtpanBottom, BorderLayout.CENTER);
-		// Text Pane Top
+		scrpBottom = new JScrollPane();
+		panBottom.add(scrpBottom);
+		scrpBottom.setViewportView(txtpanBottom);;
+		// Text Pane Top with Scroll Pane
 		txtpanTop = new JTextPane();
-		panTop.add(txtpanTop, BorderLayout.CENTER);
+		txtpanTop.addKeyListener(this);
+		scrpTop = new JScrollPane();
+		panTop.add(scrpTop);
+		scrpTop.setViewportView(txtpanTop);
 	}
 	
 	// Exit the Application
 	private void exitApplication() {
 		frameJSQLA.dispose();
 		System.exit(0);
+	}
+	
+	// Update Syntax Highlighting
+	private void updateHighlighting() {
+		SyntaxSQL syntaxsql = new SyntaxSQL();
+		try {
+			syntaxsql.setHighlighting(txtpanTop);
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
 	}
 }
