@@ -25,7 +25,7 @@ import java.awt.Color;
 import javax.swing.JTextPane;
 import java.awt.BorderLayout;
 
-public class JSQLAdmin implements KeyListener, GlobalConstants {
+public class JSQLAdmin implements KeyListener, JsqlaConstants {
 	
 	// Swing Elements
 	private JFrame frameJSQLA;
@@ -168,7 +168,7 @@ public class JSQLAdmin implements KeyListener, GlobalConstants {
 	
 	// Update Syntax Highlighting
 	private void updateHighlighting() {
-		SyntaxSQL syntaxsql = new SyntaxSQL();
+		JsqlaSyntax syntaxsql = new JsqlaSyntax();
 		try {
 			syntaxsql.setHighlighting(txtpanTop);
 		} catch (BadLocationException e) {

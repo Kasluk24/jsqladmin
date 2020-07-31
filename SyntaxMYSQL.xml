@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<Syntax>
+	<keywords>
+		<keyword>SELECT</keyword>
+		<keyword>FROM</keyword>
+		<keyword>WHERE</keyword>
+	</keywords>
+	<singlelinecomment>--</singlelinecomment>
+	<multilinecommentstart>/*</multilinecommentstart>
+	<multilinecommentend>*/</multilinecommentend>
+	<text>'</text>
+</Syntax>

@@ -11,7 +11,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
-public class SyntaxSQL {
+public class JsqlaSyntax {
 	final StyleContext cont = StyleContext.getDefaultStyleContext();
     final AttributeSet blue = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLUE);
     final AttributeSet black = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLACK);
