@@ -1,11 +1,9 @@
 package com.bplaced.lukasgafner.jsqladmin;
 
-public class JsqlaProperties {
+public class JsqlaProperties implements JsqlaConstants {
 	private String highlightxml = "SyntaxMYSQL.xml";
 	
-	
-	
-	
+		
 	public String getHighlightxml() {
 		return highlightxml;
 	}

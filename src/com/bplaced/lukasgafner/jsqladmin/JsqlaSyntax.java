@@ -22,10 +22,11 @@ public class JsqlaSyntax {
 	
 	// Styles
 	private final StyleContext cont = StyleContext.getDefaultStyleContext();
-	private final AttributeSet blue = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLUE);
-	private final AttributeSet black = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLACK);
-	private final AttributeSet green = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.GREEN);
-	private final AttributeSet purple = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.pink);
+	// TODO: Changeable colors
+	private final AttributeSet blue = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, new Color(0,0,255));
+	private final AttributeSet black = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, new Color(0,0,0));
+	private final AttributeSet green = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, new Color(0,140,0));
+	private final AttributeSet purple = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, new Color(70,0,140));
     
     // SQL Syntax Strings
     private static List<String> keywordlist = new ArrayList<>();

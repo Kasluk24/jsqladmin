@@ -111,7 +111,7 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 			}
 		});
 		mnuFile.add(mitemExit);
-		// Menu Item Debuggin
+		// Menu Item Debugging TODO: remove Item
 		mitemDebug = new JMenuItem("Debugging");
 		mitemDebug.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
