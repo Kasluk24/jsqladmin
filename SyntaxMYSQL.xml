@@ -5,8 +5,10 @@
 		<keyword>FROM</keyword>
 		<keyword>WHERE</keyword>
 	</keywords>
-	<singlelinecomment>--</singlelinecomment>
-	<multilinecommentstart>/*</multilinecommentstart>
-	<multilinecommentend>*/</multilinecommentend>
-	<text>'</text>
+	<quotes>
+		<quote>'</quote>
+	</quotes>
+	<sl-comment>--</sl-comment>
+	<ml-s-comment>/*</ml-s-comment>
+	<ml-e-comment>*/</ml-e-comment>
 </Syntax>

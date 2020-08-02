@@ -2,27 +2,42 @@ package com.bplaced.lukasgafner.jsqladmin;
 
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JTextPane;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.Element;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
+import org.w3c.dom.NodeList;
+
 public class JsqlaSyntax {
-	final StyleContext cont = StyleContext.getDefaultStyleContext();
-    final AttributeSet blue = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLUE);
-    final AttributeSet black = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLACK);
-    final AttributeSet green = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.GREEN);
-    final AttributeSet purple = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.pink);
+	// Objects
+	JsqlaProperties jsqlaproperties = new JsqlaProperties();
+	
+	
+	// Styles
+	private final StyleContext cont = StyleContext.getDefaultStyleContext();
+	private final AttributeSet blue = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLUE);
+	private final AttributeSet black = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLACK);
+	private final AttributeSet green = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.GREEN);
+	private final AttributeSet purple = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.pink);
+    
+    // SQL Syntax Strings
+    private static List<String> keywordlist = new ArrayList<>();
+    private static List<String> quotelist = new ArrayList<>();
+    private static String slcomment = "";
+    private static String mlscomment = "";
+    private static String mlecomment = "";
 	
 	public void setHighlighting(JTextPane txtPane) throws BadLocationException {
 		StyledDocument styleddoc = txtPane.getStyledDocument();
-		Element root = styleddoc.getDefaultRootElement();
-		String[] keywords = {"SELECT", "FROM", "WHERE"};
-		
+		javax.swing.text.Element root = styleddoc.getDefaultRootElement();
+				
 		int[][] lines = new int[root.getElementCount()][2];
 		for (int i = 0; i < root.getElementCount(); i++) {
 			lines[i][0] = root.getElement(i).getStartOffset();
@@ -33,9 +48,9 @@ public class JsqlaSyntax {
 		styleddoc.setCharacterAttributes(0, styleddoc.getLength(), black, false);
 		
 		// SQL keywords
-		for (int k = 0; k < keywords.length; k++) {
-			String sword = keywords[k];
-			int swordlen = keywords[k].length();
+		for (int k = 0; k < keywordlist.size(); k++) {
+			String sword = keywordlist.get(k);
+			int swordlen = keywordlist.get(k).length();
 			
 			for (int pos = 0; pos < styleddoc.getLength(); pos++) {
 				int begin = fulltext.indexOf(sword, pos);
@@ -49,24 +64,26 @@ public class JsqlaSyntax {
 		for (int j = 0; j < lines.length; j++) {
 			String line = styleddoc.getText(lines[j][0], lines[j][1]);
 			
-			int icomment = line.indexOf("--");			
+			int icomment = line.indexOf(slcomment);			
 			if (icomment > -1) {
 				styleddoc.setCharacterAttributes(icomment + lines[j][0], lines[j][1] - icomment, green, false);
 			}
 		}
 		
 		// SQL string values
-		String[] ssplitted = fulltext.split("'");
-		int sstartpos = 0;
-		for (int l = 0; l < ssplitted.length - 1; l++) {
-			sstartpos = sstartpos + ssplitted[l].length() + 1;
-			if (l % 2 == 0) {
-				styleddoc.setCharacterAttributes(sstartpos - 1, ssplitted[l + 1].length() + 2, purple, false);
+		for ( int i = 0; i < quotelist.size(); i++) {
+			String[] ssplitted = fulltext.split(quotelist.get(i));
+			int sstartpos = 0;
+			for (int l = 0; l < ssplitted.length - 1; l++) {
+				sstartpos = sstartpos + ssplitted[l].length() + 1;
+				if (l % 2 == 0) {
+					styleddoc.setCharacterAttributes(sstartpos - 1, ssplitted[l + 1].length() + 2, purple, false);
+				}
 			}
 		}
 		
 		// Multi line comment
-		String[] csplitted = fulltext.split("[/*][*/]");
+		String[] csplitted = fulltext.split("[" + mlscomment + "][" + mlecomment + "]");
 		int cstartpos = 0;
 		for (int m = 0; m < csplitted.length - 1; m++) {
 			cstartpos = cstartpos + csplitted[m].length() + 2;
@@ -74,5 +91,29 @@ public class JsqlaSyntax {
 				styleddoc.setCharacterAttributes(cstartpos - 2, csplitted[m + 1].length() + 4, green, false);
 			}
 		}
+	}
+	
+	public void getSyntax() {
+		JsqlaXML jsqlaxml = new JsqlaXML();
+		org.w3c.dom.Element xmlroot = jsqlaxml.readXML(jsqlaproperties.getHighlightxml());
+		
+		// Keywords
+		org.w3c.dom.Element xmlkeywords = (org.w3c.dom.Element) xmlroot.getElementsByTagName("keywords").item(0);
+		NodeList keywords = xmlkeywords.getElementsByTagName("keyword");
+		for (int i = 0; i < keywords.getLength(); i++) {
+			keywordlist.add(keywords.item(i).getTextContent());
+		}
+		
+		// Quotes
+		org.w3c.dom.Element xmlquotes = (org.w3c.dom.Element) xmlroot.getElementsByTagName("quotes").item(0);
+		NodeList quotes = xmlquotes.getElementsByTagName("quote");
+		for (int i = 0; i < quotes.getLength(); i++) {
+			quotelist.add(quotes.item(i).getTextContent());
+		}
+		
+		// Comments
+		slcomment = xmlroot.getElementsByTagName("sl-comment").item(0).getTextContent();
+		mlscomment = xmlroot.getElementsByTagName("ml-s-comment").item(0).getTextContent();
+		mlecomment = xmlroot.getElementsByTagName("ml-e-comment").item(0).getTextContent();
 	}
 }

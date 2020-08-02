@@ -26,12 +26,15 @@ import javax.swing.JTextPane;
 import java.awt.BorderLayout;
 
 public class JSQLAdmin implements KeyListener, JsqlaConstants {
+	// Objects
+	JsqlaSyntax jsqlasyntax = new JsqlaSyntax();
 	
-	// Swing Elements
+	
+	// Swing Objects
 	private JFrame frameJSQLA;
 	private JMenuBar mbarJSQLA;
 	private JMenu mnuFile;
-	private JMenuItem mitemExit;
+	private JMenuItem mitemExit, mitemDebug;
 	private JPanel panTop, panBottom, panRight;
 	private GridBagLayout gblJSQLA;
 	private GridBagConstraints gbcTop, gbcBottom, gbcRight;
@@ -52,6 +55,7 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 	// Start JSQLAdmin
 	public void start() {
 		initialize();
+		jsqlasyntax.getSyntax(); // Temporary used because saving properties is impossible yet
 		frameJSQLA.setVisible(true);
 	}
 	
@@ -107,6 +111,14 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 			}
 		});
 		mnuFile.add(mitemExit);
+		// Menu Item Debuggin
+		mitemDebug = new JMenuItem("Debugging");
+		mitemDebug.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jsqlasyntax.getSyntax();
+			}
+		});
+		mnuFile.add(mitemDebug);
 		
 		// Layout
 		// GridBagLaout
