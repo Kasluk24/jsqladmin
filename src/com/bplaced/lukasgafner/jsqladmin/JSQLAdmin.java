@@ -28,6 +28,8 @@ import java.awt.BorderLayout;
 public class JSQLAdmin implements KeyListener, JsqlaConstants {
 	// Objects
 	JsqlaSyntax jsqlasyntax = new JsqlaSyntax();
+	JsqlaXML jsqlaxml = new JsqlaXML();
+	JsqlaProperties jsqlaproperties = new JsqlaProperties();
 	
 	
 	// Swing Objects
@@ -115,7 +117,7 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 		mitemDebug = new JMenuItem("Debugging");
 		mitemDebug.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				jsqlasyntax.getSyntax();
+				jsqlaproperties.setActivetype("1");
 			}
 		});
 		mnuFile.add(mitemDebug);

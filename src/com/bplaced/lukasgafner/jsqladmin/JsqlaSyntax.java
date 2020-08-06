@@ -19,7 +19,6 @@ public class JsqlaSyntax {
 	// Objects
 	JsqlaProperties jsqlaproperties = new JsqlaProperties();
 	
-	
 	// Styles
 	private final StyleContext cont = StyleContext.getDefaultStyleContext();
 	// TODO: Changeable colors
@@ -38,7 +37,7 @@ public class JsqlaSyntax {
 	public void setHighlighting(JTextPane txtPane) throws BadLocationException {
 		StyledDocument styleddoc = txtPane.getStyledDocument();
 		javax.swing.text.Element root = styleddoc.getDefaultRootElement();
-				
+		
 		int[][] lines = new int[root.getElementCount()][2];
 		for (int i = 0; i < root.getElementCount(); i++) {
 			lines[i][0] = root.getElement(i).getStartOffset();
