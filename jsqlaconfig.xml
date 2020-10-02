@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Configuration>
+	<active-type>1</active-type>
+	<avail-types>
+		<t1>sqlite3</t1>
+		<t2>mysql</t2>
+	</avail-types>
+	<viewlist>
+		<sqlite3>SELECT name FROM sqlite_master WHERE type LIKE 'view';</sqlite3>
+		<mysql>SHOW FULL TABLES IN %s WHERE TABLE_TYPE LIKE 'VIEW';</mysql>
+	</viewlist>
+</Configuration>
