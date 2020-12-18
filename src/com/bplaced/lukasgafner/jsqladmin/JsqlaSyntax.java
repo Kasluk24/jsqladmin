@@ -17,7 +17,7 @@ import org.w3c.dom.NodeList;
 
 public class JsqlaSyntax {
 	// Objects
-	JsqlaProperties jsqlaproperties = new JsqlaProperties();
+	JsqlaDialects jsqlaproperties = new JsqlaDialects();
 	
 	// Styles
 	private final StyleContext cont = StyleContext.getDefaultStyleContext();
@@ -95,7 +95,8 @@ public class JsqlaSyntax {
 	
 	public void getSyntax() {
 		JsqlaXML jsqlaxml = new JsqlaXML();
-		org.w3c.dom.Element xmlroot = jsqlaxml.readXML(jsqlaproperties.getHighlightxml());
+		// TODO: Read HighlightXML from properties
+		org.w3c.dom.Element xmlroot = jsqlaxml.readXML("SyntaxMYSQL.xml");
 		
 		// Keywords
 		org.w3c.dom.Element xmlkeywords = (org.w3c.dom.Element) xmlroot.getElementsByTagName("keywords").item(0);

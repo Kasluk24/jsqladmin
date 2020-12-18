@@ -29,14 +29,14 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 	// Objects
 	JsqlaSyntax jsqlasyntax = new JsqlaSyntax();
 	JsqlaXML jsqlaxml = new JsqlaXML();
-	JsqlaProperties jsqlaproperties = new JsqlaProperties();
+	JsqlaDialects jsqlaproperties = new JsqlaDialects();
 	
 	
 	// Swing Objects
 	private JFrame frameJSQLA;
 	private JMenuBar mbarJSQLA;
 	private JMenu mnuFile;
-	private JMenuItem mitemExit, mitemDebug;
+	private JMenuItem mitemExit;
 	private JPanel panTop, panBottom, panRight;
 	private GridBagLayout gblJSQLA;
 	private GridBagConstraints gbcTop, gbcBottom, gbcRight;
@@ -113,15 +113,7 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 			}
 		});
 		mnuFile.add(mitemExit);
-		// Menu Item Debugging TODO: remove Item
-		mitemDebug = new JMenuItem("Debugging");
-		mitemDebug.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				jsqlaproperties.setActivetype("1");
-			}
-		});
-		mnuFile.add(mitemDebug);
-		
+				
 		// Layout
 		// GridBagLaout
 		gblJSQLA = new GridBagLayout();

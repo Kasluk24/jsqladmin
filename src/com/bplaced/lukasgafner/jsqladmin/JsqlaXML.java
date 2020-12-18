@@ -39,6 +39,18 @@ public class JsqlaXML {
 		return document;
 	}
 	
+	// Read the root element of xml file
+	public Element readXML(String filepath) {
+		Document doc = getDocument(filepath);
+		doc.normalize();
+		
+		Element xmlroot = doc.getDocumentElement();
+	
+		return xmlroot;
+	}
+	
+	// Save xml file (not used yet)
+	/*
 	private void saveFile(String filepath, Document document) {
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		DOMSource domSource = new DOMSource(document);
@@ -52,18 +64,10 @@ public class JsqlaXML {
 			JOptionPane.showMessageDialog(null, "Unable to write the selected XML file\n" + e.getMessage(), "Write XML Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
+	*/
 	
-	// Read the root element of xml file
-	public Element readXML(String filepath) {
-		Document doc = getDocument(filepath);
-		doc.normalize();
-		
-		Element xmlroot = doc.getDocumentElement();
-	
-		return xmlroot;
-	}
-	
-	// Creates a Document to write into the xml file
+	// Creates a document to write into the xml file (not used yet)
+	/*
 	public void writeXML(String filepath, String nodestring, String value) {
 		Document doc = getDocument(filepath);
 		doc.normalize();
@@ -82,4 +86,5 @@ public class JsqlaXML {
 		
 		saveFile(filepath, doc);
 	}
+	*/
 }

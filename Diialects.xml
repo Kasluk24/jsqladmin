@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<expressions>
+	<mysql>
+		<viewlist>SHOW FULL TABLES IN %s WHERE TABLE_TYPE LIKE 'VIEW';</viewlist>
+	</mysql>
+	<sqlite3>
+		<viewlist>SELECT name FROM sqlite_master WHERE type LIKE 'view';</viewlist>
+	</sqlite3>
+</expressions>
