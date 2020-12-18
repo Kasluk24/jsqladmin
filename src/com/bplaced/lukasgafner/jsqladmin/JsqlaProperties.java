@@ -25,7 +25,7 @@ public class JsqlaProperties {
 	private void storeProperties() {
 		try {
 			FileOutputStream outputstream = new FileOutputStream(prop_path);
-			prop.storeToXML(outputstream, "Main property file");
+			prop.store(outputstream, "Main property file");
 			outputstream.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -36,7 +36,7 @@ public class JsqlaProperties {
 	public void loadProperties() {
 		try {
 			FileInputStream inputstream = new FileInputStream(prop_path);
-			prop.loadFromXML(inputstream);
+			prop.load(inputstream);
 			inputstream.close();
 		} catch (IOException e) {
 			e.printStackTrace();

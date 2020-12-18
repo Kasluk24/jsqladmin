@@ -3,7 +3,6 @@ package com.bplaced.lukasgafner.jsqladmin;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JTextPane;
@@ -17,7 +16,7 @@ import org.w3c.dom.NodeList;
 
 public class JsqlaSyntax {
 	// Objects
-	JsqlaDialects jsqlaproperties = new JsqlaDialects();
+	JsqlaExpressions jsqlaproperties = new JsqlaExpressions();
 	
 	// Styles
 	private final StyleContext cont = StyleContext.getDefaultStyleContext();
@@ -96,7 +95,7 @@ public class JsqlaSyntax {
 	public void getSyntax() {
 		JsqlaXML jsqlaxml = new JsqlaXML();
 		// TODO: Read HighlightXML from properties
-		org.w3c.dom.Element xmlroot = jsqlaxml.readXML("SyntaxMYSQL.xml");
+		org.w3c.dom.Element xmlroot = jsqlaxml.readXML("syntax/mysql.xml");
 		
 		// Keywords
 		org.w3c.dom.Element xmlkeywords = (org.w3c.dom.Element) xmlroot.getElementsByTagName("keywords").item(0);
