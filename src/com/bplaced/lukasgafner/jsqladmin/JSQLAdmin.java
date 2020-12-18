@@ -17,8 +17,6 @@ import javax.swing.JScrollPane;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.border.LineBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
 import java.awt.Color;
@@ -29,8 +27,7 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 	// Objects
 	JsqlaSyntax jsqlasyntax = new JsqlaSyntax();
 	JsqlaXML jsqlaxml = new JsqlaXML();
-	JsqlaDialects jsqlaproperties = new JsqlaDialects();
-	
+	JsqlaProperties jsqlaproperties = new JsqlaProperties();
 	
 	// Swing Objects
 	private JFrame frameJSQLA;
@@ -41,7 +38,6 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 	private GridBagLayout gblJSQLA;
 	private GridBagConstraints gbcTop, gbcBottom, gbcRight;
 	private JScrollPane scrpTop, scrpBottom;
-	
 	private JTextPane txtpanTop, txtpanBottom;
 
 	// Launch application
@@ -56,6 +52,7 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 	
 	// Start JSQLAdmin
 	public void start() {
+		jsqlaproperties.loadProperties(); // Load all properties
 		initialize();
 		jsqlasyntax.getSyntax(); // Temporary used because saving properties is impossible yet
 		frameJSQLA.setVisible(true);
@@ -113,6 +110,14 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 			}
 		});
 		mnuFile.add(mitemExit);
+		// Menu Item Debug TODO: Remove this Item
+		JMenuItem mitemDebug = new JMenuItem("Debug");
+		mitemDebug.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(jsqlaproperties.getProperty("Test"));
+			}
+		});
+		mnuFile.add(mitemDebug);
 				
 		// Layout
 		// GridBagLaout
