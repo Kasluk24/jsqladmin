@@ -114,6 +114,7 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 		JMenuItem mitemDebug = new JMenuItem("Debug");
 		mitemDebug.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				jsqlaproperties.setProperty("Test", "Lukas");
 				System.out.println(jsqlaproperties.getProperty("Test"));
 			}
 		});
