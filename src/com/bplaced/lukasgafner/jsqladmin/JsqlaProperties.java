@@ -5,12 +5,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-public class JsqlaProperties {
+public class JsqlaProperties implements JsqlaConstants {
 	String prop_path = "config.properties";
 	Properties prop = new Properties();
 	
 	// Get a property
 	public String getProperty(String key) {
+		loadProperties();
 		String value = prop.get(key).toString();
 		return value;
 	}

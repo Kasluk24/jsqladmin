@@ -28,6 +28,7 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 	JsqlaSyntax jsqlasyntax = new JsqlaSyntax();
 	JsqlaXML jsqlaxml = new JsqlaXML();
 	JsqlaProperties jsqlaproperties = new JsqlaProperties();
+	JsqlaExpressions jsqlaexpressions = new JsqlaExpressions();
 	
 	// Swing Objects
 	private JFrame frameJSQLA;
@@ -52,10 +53,11 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 	
 	// Start JSQLAdmin
 	public void start() {
-		jsqlaproperties.loadProperties(); // Load all properties
 		initialize();
 		jsqlasyntax.getSyntax(); // Temporary used because saving properties is impossible yet
 		frameJSQLA.setVisible(true);
+		
+		jsqlaexpressions.loadExpressions();
 	}
 	
 	@Override
@@ -114,8 +116,7 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 		JMenuItem mitemDebug = new JMenuItem("Debug");
 		mitemDebug.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				jsqlaproperties.setProperty("Test", "Lukas");
-				System.out.println(jsqlaproperties.getProperty("Test"));
+				System.out.println(jsqlaexpressions.getViewlist());
 			}
 		});
 		mnuFile.add(mitemDebug);

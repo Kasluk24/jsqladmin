@@ -14,9 +14,9 @@ import javax.swing.text.StyledDocument;
 
 import org.w3c.dom.NodeList;
 
-public class JsqlaSyntax {
-	// Objects
-	JsqlaExpressions jsqlaproperties = new JsqlaExpressions();
+public class JsqlaSyntax implements JsqlaConstants {
+	// Properties object
+	JsqlaProperties jsqlaproperties = new JsqlaProperties();
 	
 	// Styles
 	private final StyleContext cont = StyleContext.getDefaultStyleContext();
@@ -94,8 +94,7 @@ public class JsqlaSyntax {
 	
 	public void getSyntax() {
 		JsqlaXML jsqlaxml = new JsqlaXML();
-		// TODO: Read HighlightXML from properties
-		org.w3c.dom.Element xmlroot = jsqlaxml.readXML("syntax/mysql.xml");
+		org.w3c.dom.Element xmlroot = jsqlaxml.readXML(jsqlaproperties.getProperty(p_syntaxfile));
 		
 		// Keywords
 		org.w3c.dom.Element xmlkeywords = (org.w3c.dom.Element) xmlroot.getElementsByTagName("keywords").item(0);
