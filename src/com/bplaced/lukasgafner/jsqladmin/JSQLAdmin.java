@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -25,10 +27,10 @@ import java.awt.BorderLayout;
 
 public class JSQLAdmin implements KeyListener, JsqlaConstants {
 	// Objects
-	JsqlaSyntax jsqlasyntax = new JsqlaSyntax();
-	JsqlaXML jsqlaxml = new JsqlaXML();
-	JsqlaProperties jsqlaproperties = new JsqlaProperties();
-	JsqlaExpressions jsqlaexpressions = new JsqlaExpressions();
+	JsqlaSyntax synt = new JsqlaSyntax();
+	JsqlaProperties prop = new JsqlaProperties();
+	JsqlaExpressions expr = new JsqlaExpressions();
+	JsqlaDialects dial = new JsqlaDialects();
 	
 	// Swing Objects
 	private JFrame frameJSQLA;
@@ -53,13 +55,15 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 	
 	// Start JSQLAdmin
 	public void start() {
-		initialize();
-		jsqlasyntax.getSyntax(); // Temporary used because saving properties is impossible yet
-		frameJSQLA.setVisible(true);
+		prop.loadProperties(); // Load the properties from the config.properties file
+		dial.loadDialects(); // Load the dialect
+		expr.loadExpressions(); // Load the expressions
+		synt.loadSyntax(); // Load the syntax
 		
-		jsqlaexpressions.loadExpressions();
+		initialize();
+		frameJSQLA.setVisible(true);
 	}
-	
+		
 	@Override
 	public void keyTyped(KeyEvent e) {}
 	
@@ -93,9 +97,14 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 		frameJSQLA = new JFrame();
 		frameJSQLA.setBounds(100, 100, 786, 443);
 		frameJSQLA.setTitle("JSQLAdmin");
-		frameJSQLA.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameJSQLA.setFocusable(true);
 		frameJSQLA.addKeyListener(this);
+		frameJSQLA.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frameJSQLA.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+		       exitApplication();
+		    }
+		});
 		
 		// Menu
 		// Menu Bar
@@ -116,7 +125,7 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 		JMenuItem mitemDebug = new JMenuItem("Debug");
 		mitemDebug.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(jsqlaexpressions.getViewlist());
+				System.out.println(expr.getViewlist());
 			}
 		});
 		mnuFile.add(mitemDebug);
@@ -175,6 +184,8 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 	
 	// Exit the Application
 	private void exitApplication() {
+		prop.storeProperties(); // Store properties before closing
+		
 		frameJSQLA.dispose();
 		System.exit(0);
 	}

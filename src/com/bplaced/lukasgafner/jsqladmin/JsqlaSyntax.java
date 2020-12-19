@@ -92,8 +92,8 @@ public class JsqlaSyntax implements JsqlaConstants {
 		}
 	}
 	
-	public void getSyntax() {
-		JsqlaXML jsqlaxml = new JsqlaXML();
+	public void loadSyntax() {
+		JsqlaXMLFiles jsqlaxml = new JsqlaXMLFiles();
 		org.w3c.dom.Element xmlroot = jsqlaxml.readXML(jsqlaproperties.getProperty(p_syntaxfile));
 		
 		// Keywords

@@ -6,12 +6,11 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class JsqlaProperties implements JsqlaConstants {
-	String prop_path = "config.properties";
-	Properties prop = new Properties();
+	static Properties prop = new Properties();
 	
 	// Get a property
 	public String getProperty(String key) {
-		loadProperties();
+		// loadProperties();
 		String value = prop.get(key).toString();
 		return value;
 	}
@@ -19,13 +18,12 @@ public class JsqlaProperties implements JsqlaConstants {
 	// Set a property
 	public void setProperty(String key, String value) {
 		prop.put(key, value);
-		storeProperties();
 	}
 	
-	// Store properties
-	private void storeProperties() {
+	// Store properties (once on exit)
+	public void storeProperties() {
 		try {
-			FileOutputStream outputstream = new FileOutputStream(prop_path);
+			FileOutputStream outputstream = new FileOutputStream(p_path);
 			prop.store(outputstream, "Main property file");
 			outputstream.close();
 		} catch (IOException e) {
@@ -33,10 +31,10 @@ public class JsqlaProperties implements JsqlaConstants {
 		}
 	}
 	
-	// Load properties
+	// Load properties (once at start)
 	public void loadProperties() {
 		try {
-			FileInputStream inputstream = new FileInputStream(prop_path);
+			FileInputStream inputstream = new FileInputStream(p_path);
 			prop.load(inputstream);
 			inputstream.close();
 		} catch (IOException e) {
