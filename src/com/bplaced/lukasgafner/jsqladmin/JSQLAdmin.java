@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -17,17 +19,20 @@ import javax.swing.JScrollPane;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.border.LineBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
 import java.awt.Color;
 import javax.swing.JTextPane;
 import java.awt.BorderLayout;
 
-public class JSQLAdmin implements KeyListener, GlobalConstants {
+public class JSQLAdmin implements KeyListener, JsqlaConstants {
+	// Objects
+	JsqlaSyntax synt = new JsqlaSyntax();
+	JsqlaProperties prop = new JsqlaProperties();
+	JsqlaExpressions expr = new JsqlaExpressions();
+	JsqlaDialects dial = new JsqlaDialects();
 	
-	// Swing Elements
+	// Swing Objects
 	private JFrame frameJSQLA;
 	private JMenuBar mbarJSQLA;
 	private JMenu mnuFile;
@@ -36,7 +41,6 @@ public class JSQLAdmin implements KeyListener, GlobalConstants {
 	private GridBagLayout gblJSQLA;
 	private GridBagConstraints gbcTop, gbcBottom, gbcRight;
 	private JScrollPane scrpTop, scrpBottom;
-	
 	private JTextPane txtpanTop, txtpanBottom;
 
 	// Launch application
@@ -51,10 +55,15 @@ public class JSQLAdmin implements KeyListener, GlobalConstants {
 	
 	// Start JSQLAdmin
 	public void start() {
+		prop.loadProperties(); // Load the properties from the config.properties file
+		dial.loadDialects(); // Load the dialect
+		expr.loadExpressions(); // Load the expressions
+		synt.loadSyntax(); // Load the syntax
+		
 		initialize();
 		frameJSQLA.setVisible(true);
 	}
-	
+		
 	@Override
 	public void keyTyped(KeyEvent e) {}
 	
@@ -88,9 +97,14 @@ public class JSQLAdmin implements KeyListener, GlobalConstants {
 		frameJSQLA = new JFrame();
 		frameJSQLA.setBounds(100, 100, 786, 443);
 		frameJSQLA.setTitle("JSQLAdmin");
-		frameJSQLA.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameJSQLA.setFocusable(true);
 		frameJSQLA.addKeyListener(this);
+		frameJSQLA.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frameJSQLA.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+		       exitApplication();
+		    }
+		});
 		
 		// Menu
 		// Menu Bar
@@ -107,7 +121,15 @@ public class JSQLAdmin implements KeyListener, GlobalConstants {
 			}
 		});
 		mnuFile.add(mitemExit);
-		
+		// Menu Item Debug TODO: Remove this Item
+		JMenuItem mitemDebug = new JMenuItem("Debug");
+		mitemDebug.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(expr.getViewlist());
+			}
+		});
+		mnuFile.add(mitemDebug);
+				
 		// Layout
 		// GridBagLaout
 		gblJSQLA = new GridBagLayout();
@@ -162,13 +184,15 @@ public class JSQLAdmin implements KeyListener, GlobalConstants {
 	
 	// Exit the Application
 	private void exitApplication() {
+		prop.storeProperties(); // Store properties before closing
+		
 		frameJSQLA.dispose();
 		System.exit(0);
 	}
 	
 	// Update Syntax Highlighting
 	private void updateHighlighting() {
-		SyntaxSQL syntaxsql = new SyntaxSQL();
+		JsqlaSyntax syntaxsql = new JsqlaSyntax();
 		try {
 			syntaxsql.setHighlighting(txtpanTop);
 		} catch (BadLocationException e) {

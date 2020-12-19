@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<syntax xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../schema/syntax.xsd">
+	<keywords>
+		<keyword>SELECT</keyword>
+		<keyword>FROM</keyword>
+		<keyword>WHERE</keyword>
+	</keywords>
+	<quotes>
+		<quote>'</quote>
+		<quote>"</quote>
+	</quotes>
+	<sl-comment>--</sl-comment>
+	<ml-s-comment>/*</ml-s-comment>
+	<ml-e-comment>*/</ml-e-comment>
+</syntax>
