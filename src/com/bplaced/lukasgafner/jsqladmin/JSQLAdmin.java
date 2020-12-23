@@ -7,6 +7,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -18,12 +20,35 @@ import javax.swing.JScrollPane;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.text.BadLocationException;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreeNode;
 
 import java.awt.Color;
 import javax.swing.JTextPane;
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+
+import javax.swing.JTree;
+import javax.swing.JSeparator;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.JList;
+import javax.swing.AbstractListModel;
+import javax.swing.ListSelectionModel;
+import javax.swing.Box;
+import java.awt.GridLayout;
+import javax.swing.BoxLayout;
+import java.awt.Component;
+import javax.swing.JComboBox;
 
 public class JSQLAdmin implements KeyListener, JsqlaConstants {
 	// Objects
@@ -35,13 +60,17 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 	// Swing Objects
 	private JFrame frameJSQLA;
 	private JMenuBar mbarJSQLA;
-	private JMenu mnuFile;
-	private JMenuItem mitemExit;
+	private JMenu mnuFile, mnuEdit;
+	private JMenuItem mitemExit, mitemCopy, mitemPaste, mitemSettings;
 	private JPanel panTop, panBottom, panRight;
 	private GridBagLayout gblJSQLA;
 	private GridBagConstraints gbcTop, gbcBottom, gbcRight;
 	private JScrollPane scrpTop, scrpBottom;
 	private JTextPane txtpanTop, txtpanBottom;
+	private JSeparator sepMEdit1;
+	private JScrollPane scrpRight;
+	private JComboBox comboBox;
+	private JList list;
 
 	// Launch application
 	public static void main(String[] args) {
@@ -62,6 +91,8 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 		
 		initialize();
 		frameJSQLA.setVisible(true);
+		
+		setTreeToolsModel();
 	}
 		
 	@Override
@@ -129,11 +160,45 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 			}
 		});
 		mnuFile.add(mitemDebug);
+		// Menu Edit
+		mnuEdit = new JMenu("Edit");
+		mbarJSQLA.add(mnuEdit);
+		// Menu Item Copy
+		mitemCopy = new JMenuItem("Copy");
+		mitemCopy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Copy selection in clipboard
+				
+			}
+		});
+		mnuEdit.add(mitemCopy);
+		// Menu Item Paste
+		mitemPaste = new JMenuItem("Paste");
+		mitemPaste.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Paste from clipboard
+				
+			}
+		});
+		mnuEdit.add(mitemPaste);
+		// Menu Edit Separator 1
+		sepMEdit1 = new JSeparator();
+		mnuEdit.add(sepMEdit1);
+		// Menu Item Settings
+		mitemSettings = new JMenuItem("Settings");
+		mitemSettings.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Show settings window
+				
+			}
+		});
+		mnuEdit.add(mitemSettings);
+		
 				
 		// Layout
 		// GridBagLaout
 		gblJSQLA = new GridBagLayout();
-		gblJSQLA.columnWidths = new int[]{200, 180, 0};
+		gblJSQLA.columnWidths = new int[]{200, 200, 0};
 		gblJSQLA.rowHeights = new int[]{40, 40, 0};
 		gblJSQLA.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
 		gblJSQLA.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
@@ -180,6 +245,16 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 		scrpTop = new JScrollPane();
 		panTop.add(scrpTop);
 		scrpTop.setViewportView(txtpanTop);
+		panRight.setLayout(new BorderLayout(0, 0));
+		
+		scrpRight = new JScrollPane((Component) null);
+		panRight.add(scrpRight, BorderLayout.CENTER);
+		
+		list = new JList();
+		scrpRight.add(list);
+		
+		comboBox = new JComboBox();
+		panRight.add(comboBox, BorderLayout.NORTH);
 	}
 	
 	// Exit the Application
@@ -198,5 +273,10 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	// Create model for treeTools
+	private void setTreeToolsModel() {
+		
 	}
 }
