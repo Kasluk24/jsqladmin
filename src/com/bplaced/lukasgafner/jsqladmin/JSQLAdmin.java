@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -47,8 +49,11 @@ import javax.swing.ListSelectionModel;
 import javax.swing.Box;
 import java.awt.GridLayout;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+
 import java.awt.Component;
 import javax.swing.JComboBox;
+import java.awt.event.MouseAdapter;
 
 public class JSQLAdmin implements KeyListener, JsqlaConstants {
 	// Objects
@@ -69,8 +74,8 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 	private JTextPane txtpanTop, txtpanBottom;
 	private JSeparator sepMEdit1;
 	private JScrollPane scrpRight;
-	private JComboBox comboBox;
-	private JList list;
+	private JComboBox<String> comboBox;
+	private JList<String> listTools;
 
 	// Launch application
 	public static void main(String[] args) {
@@ -92,7 +97,8 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 		initialize();
 		frameJSQLA.setVisible(true);
 		
-		setTreeToolsModel();
+		setToolListModel();
+		setToolComboModel();
 	}
 		
 	@Override
@@ -245,15 +251,29 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 		scrpTop = new JScrollPane();
 		panTop.add(scrpTop);
 		scrpTop.setViewportView(txtpanTop);
+		
+		
 		panRight.setLayout(new BorderLayout(0, 0));
-		
-		scrpRight = new JScrollPane((Component) null);
+		scrpRight = new JScrollPane();
+		listTools = new JList<>();
+		listTools.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getButton() == MouseEvent.BUTTON1) {
+					// Left (not used yet)
+				}
+				if (e.getButton() == MouseEvent.BUTTON2) {
+					// Middle (not used yet)
+				}
+				if (e.getButton() == MouseEvent.BUTTON3) {
+					// Right
+					rmouseTool();
+				}
+			}
+		});
+		scrpRight.setViewportView(listTools);
 		panRight.add(scrpRight, BorderLayout.CENTER);
-		
-		list = new JList();
-		scrpRight.add(list);
-		
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<String>();
 		panRight.add(comboBox, BorderLayout.NORTH);
 	}
 	
@@ -275,8 +295,44 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 		}
 	}
 	
-	// Create model for treeTools
-	private void setTreeToolsModel() {
+	// Create model for the tools List
+	private void setToolListModel() {
+		AbstractListModel<String> toollistmod = new AbstractListModel<>() {
+			String[] values = getTools();
+			public int getSize() {
+				return values.length;
+			}
+			public String getElementAt(int index) {
+				return values[index];
+			}
+		};
+		
+		listTools.setModel(toollistmod);
+	}
+	
+	// Create the String[] with the tools apart from the selected category
+	private String[] getTools() {
+		List<String> toolslist = new ArrayList<String>();
+		
+		// Temporary for testing. TODO: Delete this loop
+		for (int i = 0; i < 20; i++) {
+			toolslist.add("Test " + i);
+		}
+		
+		
+		String[] toolsarray = new String[toolslist.size()];
+		toolsarray = toolslist.toArray(toolsarray);
+		
+		return toolsarray;
+	}
+	
+	// Create model for the tool category selection combo box
+	private void setToolComboModel() {
+		
+	}
+	
+	// Right mouse button on the tool list
+	private void rmouseTool() {
 		
 	}
 }
