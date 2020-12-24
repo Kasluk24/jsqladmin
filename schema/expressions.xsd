@@ -6,6 +6,7 @@
 			<xs:element name="dialect" maxOccurs="unbounded">
     			<xs:complexType>
         			<xs:sequence>
+        				<xs:element name="nonerrcodes" type="xs:string" maxOccurs="1"/>
             			<xs:element name="viewlist" type="xs:string" maxOccurs="1"/>
         			</xs:sequence>
         			<xs:attribute name="dname" type="xs:string"></xs:attribute>

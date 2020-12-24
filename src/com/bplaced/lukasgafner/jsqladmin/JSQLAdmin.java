@@ -6,9 +6,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,35 +23,15 @@ import javax.swing.JScrollPane;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.text.BadLocationException;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeModel;
-import javax.swing.tree.TreeNode;
-
 import java.awt.Color;
 import javax.swing.JTextPane;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.Font;
 
-import javax.swing.JTree;
 import javax.swing.JSeparator;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
-import javax.swing.ListSelectionModel;
-import javax.swing.Box;
-import java.awt.GridLayout;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
-
-import java.awt.Component;
 import javax.swing.JComboBox;
 import java.awt.event.MouseAdapter;
 
@@ -61,6 +41,8 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 	JsqlaProperties prop = new JsqlaProperties();
 	JsqlaExpressions expr = new JsqlaExpressions();
 	JsqlaDialects dial = new JsqlaDialects();
+	JsqlaConnection con = new JsqlaConnection();
+	JsqlaQuery sqlq = new JsqlaQuery();
 	
 	// Swing Objects
 	private JFrame frameJSQLA;
@@ -93,7 +75,16 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 		dial.loadDialects(); // Load the dialect
 		expr.loadExpressions(); // Load the expressions
 		synt.loadSyntax(); // Load the syntax
+		 // TODO: Select connection after start
 		
+		con.readConnection("Test");
+		try {
+			con.DBConnect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		// Initialization
 		initialize();
 		frameJSQLA.setVisible(true);
 		
@@ -162,7 +153,7 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 		JMenuItem mitemDebug = new JMenuItem("Debug");
 		mitemDebug.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(expr.getViewlist());
+				getTest();
 			}
 		});
 		mnuFile.add(mitemDebug);
@@ -334,5 +325,10 @@ public class JSQLAdmin implements KeyListener, JsqlaConstants {
 	// Right mouse button on the tool list
 	private void rmouseTool() {
 		
+	}
+	
+	// TODO: Remove this test Function
+	private void getTest() {
+		sqlq.SQLDBQuery("INSERT INTO tbl_Test(Vorname, Nachname) VALUES('Test', 'Test');");
 	}
 }

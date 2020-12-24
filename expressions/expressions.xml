@@ -2,9 +2,11 @@
 
 <expressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../schema/expressions.xsd">
 	<dialect dname="mysql">
+		<nonerrcodes></nonerrcodes>
 		<viewlist>SHOW FULL TABLES WHERE TABLE_TYPE LIKE 'VIEW';</viewlist>
 	</dialect>
 	<dialect dname="sqlite3">
+		<nonerrcodes>0,100,101</nonerrcodes>
 		<viewlist>SELECT name FROM sqlite_master WHERE type LIKE 'view';</viewlist>
 	</dialect>
 </expressions>
