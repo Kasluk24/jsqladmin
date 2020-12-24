@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<connections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../schema/connections.xsd">
+	<connection cname="Test">
+		<database>db/Testdatabase.sqlite</database>
+		<parameter></parameter>
+		<user></user>
+		<password></password>
+	</connection>
+</connections>

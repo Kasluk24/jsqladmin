@@ -10,5 +10,5 @@ public interface JsqlaConstants {
 	// Property keys
 	public static final String p_syntaxfile = "syntax-file"; // Relative path to the currently selected syntax file
 	public static final String p_expressionsfile = "expressions-file"; // Relative path to the currently selected expressions file
-	
+	public static final String p_connectionsfile = "connections-file";
 }

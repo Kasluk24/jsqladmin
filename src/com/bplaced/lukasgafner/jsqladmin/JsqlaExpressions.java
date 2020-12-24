@@ -11,10 +11,11 @@ public class JsqlaExpressions implements JsqlaConstants {
 	
 	// Variables with expressions
 	private static String viewlist = "";
+	private static String[] nonerrors;
 	
 	// Read the expressions from the XML file (once at start)
 	public void loadExpressions() {
-		Element expressionsroot = xmlf.readXML(prop.getProperty("expressions-file"));
+		Element expressionsroot = xmlf.readXML(prop.getProperty(p_expressionsfile));
 		NodeList dialectlist = expressionsroot.getElementsByTagName("dialect");
 		Element dialect = null;
 				
@@ -26,10 +27,15 @@ public class JsqlaExpressions implements JsqlaConstants {
 		
 		// Write the expressions into the variables
 		viewlist = dialect.getElementsByTagName("viewlist").item(0).getTextContent();
+		nonerrors = dialect.getElementsByTagName("nonerrcodes").item(0).getTextContent().split(",");
+		
 	}	
 	
 	// Getters
 	public final String getViewlist() {
 		return viewlist;
+	}
+	public final String[] getNonerrors() {
+		return nonerrors;
 	}
 }
